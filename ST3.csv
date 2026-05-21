@@ -1,0 +1,48 @@
+Organism,Effector,Product,"Yield 
+change",Field,References,DOI link,Graph. abstract link
+"Escherichia 
+coli",dCas9,Isopentenol,1.2 fold,biofuel,"Tian T, Kang JW, Kang A, Lee TS. Redirecting Metabolic Flux via Combinatorial Multiplex CRISPRi-Mediated Repression for Isopentenol Production in Escherichia coli. (2019)",https://doi.org/10.1021/acssynbio.8b00429,https://pubs.acs.org/cms/10.1021/acssynbio.8b00429/asset/images/medium/sb-2018-004295_0008.gif
+"Escherichia 
+coli",dCas9,Isoprenol,"3 to 4.5-
+fold",biofuel,"Kim J, Lee TS. Enhancing isoprenol production by systematically tuning metabolic pathways using CRISPR interference in E. coli. (2023)",https://doi.org/10.3389/fbioe.2023.1296132,https://cdn.ncbi.nlm.nih.gov/pmc/blobs/3235/10659101/b6fbd2920685/fbioe-11-1296132-g001.gif
+"Corynebacterium
+glutamicum",dCas9,"l-lysine and 
+l-glutamate","2.1 and
+3.25 fold",feed industries,"Cleto S, Jensen JV, Wendisch VF, Lu TK. Corynebacterium glutamicum Metabolic Engineering with CRISPR Interference (CRISPRi). (2016)",https://doi.org/10.1021/acssynbio.5b00216,https://pubs.acs.org/cms/10.1021/acssynbio.5b00216/asset/images/medium/sb-2015-002165_0007.gif
+"Synechocystis sp.
+PCC6803",dCas9,Fatty alcohols,3 fold,cosmetology,"Kaczmarzyk D, Cengic I, Yao L, Hudson EP. Diversion of the long-chain acyl-ACP pool in Synechocystis to fatty alcohols through CRISPRi repression of the essential phosphate acyltransferase PlsX. (2018)",https://doi.org/10.1016/j.ymben.2017.11.014,
+"Myxococcus
+xanthus",dCas9-ω,Epothilones,6.8 fold,"medicine
+(cancer drugs)","Peng, R., Li, YF., Liu, Y. TEF Dependent Software FDP and FCP Models. In: Software Fault Detection and Correction: Modeling and Applications. (2018)",https://doi.org/10.1007/978-981-13-1162-8_3,https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-981-13-1162-8_3/MediaObjects/465822_1_En_3_Fig1_HTML.png?
+"Bacillus 
+subtilis",dCas9,GlcNAc,1.6 fold,medicine,"Wu Y, Chen T, Liu Y, et al. Design of a programmable biosensor-CRISPRi genetic circuits for dynamic and autonomous dual-control of metabolic flux in Bacillus subtilis. (2020)",https://doi.org/10.1093/nar/gkz1123,https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/48/2/10.1093_nar_gkz1123/1/m_gkz1123fig1.jpeg?Expires=1747924250&Signature=DUvh3R6rCVLPlIRSskzVb6b20aaMReSvjCKtTFeWd7TE5fmXSMdYvGkXvwfpg7KbMPE2PCSn29qrVX2EHZxvILhPK6pdzDZYUBkmRS7SR43bYu83kGh9rMWF13Nqa37baTbC-mTI~xH9J5Tluh3KkmvYMc2pqxr0UcP28Z1uSemqPj3uJFkXOyP8gumfC1waSZj-9-c-56BUOlED60BVvyzkmLbW2aTLD7GLjBmCELNkMGcKOJQVxhjf5ywdQgrYpimRS-3k0LMX9bIjtjCBVxDZhOJPScTPZldUj1nHY2H5WSwIWQZ~OEp5sUJSMR8RpBg-Um~j8UTR~4EVtdEcDw__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA
+"Yarrowia 
+lipolytica",dCas9,Naringenin,17.5 fold,"medicine,
+flavonoid
+precursor","Lv Y, Gu Y, Xu J, Zhou J, Xu P. Coupling metabolic addiction with negative autoregulation to improve strain stability and pathway yield. (2020)",https://doi.org/10.1016/j.ymben.2020.05.005,https://cdn.ncbi.nlm.nih.gov/pmc/blobs/83a1/7510839/ad152648474d/gr1.jpg
+"Saccharomyces 
+cerevisiae",dCas9-VPR*,"3-Hydroxypropionic 
+acid (3-HP)",1.34 fold,"chemical
+synthesis","erreira R, Skrekas C, Hedin A, et al. Model-Assisted Fine-Tuning of Central Carbon Metabolism in Yeast through dCas9-Based Regulation. (2019)",https://doi.org/10.1021/acssynbio.9b00258,https://pubs.acs.org/cms/10.1021/acssynbio.9b00258/asset/images/medium/sb9b00258_0003.gif
+"Saccharomyces 
+cerevisiae","dCas9/dCas12a
++Spy/Suntag*","3-Hydroxypropionic 
+acid (3-HP)",2 fold,"chemical
+synthesis","Haotian Zhai, Li Cui, et al. CRISPR-mediated protein-tagging signal amplification systems for efficient transcriptional activation and repression in Saccharomyces cerevisiae. (2022)",https://doi.org/10.1093/nar/gkac463,https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/50/10/10.1093_nar_gkac463/1/m_gkac463fig1.jpeg?Expires=1748052776&Signature=XWd7pG9TTkSo6vxv7UMmBn5Q-XANW2NlB4oht0mFIjG-HzhXGRV-FlDyzjHL7aEhw3~U0x-H6xVMTkz0FWgkashmXRWz1arPvvpqdzz~iWCOAUnZzgKqqsaOZq7FiKSYuJ5UQeahB39AFcq-Kn~kxmzq7MLRRdu8JE3qTj5U7Ybm8QtBdvG9xb0Z0B4kV7hjRmYAbYuytQ-ll-t3ZIy9QtMASv4sUh~QIPtTA0MYkQNyZTKwpHKGUUiJ5BiHfAQaD2eNEDQm8QyKJuw7cid0tu1t7HRAl4sbweYxnBj~yXBtLJ~OQdqgoZq6qJ-yOvXOA7HfynpVHxQIVq-Oa-uChg__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA
+"Saccharomyces 
+cerevisiae",dCas9-VPR*,Triacylglycerols,2 fold,"food
+biofuel","Jensen ED, Ferreira R, Jakočiūnas T, et al. Transcriptional reprogramming in yeast using dCas9 and combinatorial gRNA strategies. (2017)",https://doi.org/10.1186/s12934-017-0664-2,https://cdn.ncbi.nlm.nih.gov/pmc/blobs/6341/5353793/a519f8fc643a/12934_2017_664_Fig1_HTML.jpg
+"Aspergillus 
+nidulans","dLbCas12a-VPR
+dCas9-VPR*",microperfuranone,-,"not 
+studied","Roux I, Woodcraft C, Hu J, Wolters R, Gilchrist CLM, Chooi YH. CRISPR-Mediated Activation of Biosynthetic Gene Clusters for Bioactive Molecule Discovery in Filamentous Fungi. (2020)",https://doi.org/10.1021/acssynbio.0c00197,https://pubs.acs.org/cms/10.1021/acssynbio.0c00197/asset/images/medium/sb0c00197_0005.gif
+"Aspergillus 
+niger",dCas9-p300,"brevianamide F, fumonisin B2 and melanin","up to 3.4, 5.6 and 2 fold","medicine, cosmetology","Li X, Huang L, Pan L, Wang B, Pan L. CRISPR/dCas9-mediated epigenetic modification reveals differential regulation of histone acetylation on Aspergillus niger secondary metabolite. (2020)",https://doi.org/10.1016/j.micres.2020.126694,https://ars.els-cdn.com/content/image/1-s2.0-S0944501320305620-gr1.jpg
+"Chlamydomonas
+reinhardtii",dCas9-KRAB*,lipid production,up to 1.9 fold,biofuel,"Kao PH, Ng IS. CRISPRi mediated phosphoenolpyruvate carboxylase regulation to enhance the production of lipid in Chlamydomonas reinhardtii. (2017)",https://doi.org/10.1016/j.biortech.2017.04.111,https://ars.els-cdn.com/content/image/1-s2.0-S0960852417306193-fx1.jpg
+"Chlorella 
+sorokiniana","dCas9-KRAB/
+dCas9-VP64*",lipid and proteins,"up to 1.36 
+(lipids)
+up to 1.6
+(proteins)",biofuel,"Lin JY, Lin WR, Ng IS. CRISPRa/i with Adaptive Single Guide Assisted Regulation DNA (ASGARD) mediated control of Chlorella sorokiniana to enhance lipid and protein production. (2022)",https://doi.org/10.1002/biot.202100514,https://analyticalsciencejournals.onlinelibrary.wiley.com/cms/asset/692248b0-7fd5-4a17-b9cf-a424d578271e/biot202100514-fig-0001-m.jpg
