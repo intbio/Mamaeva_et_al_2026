@@ -1,6 +1,6 @@
-# Kovalev_et_al_2025
+# Mamaeva_et_al_2026
 
-This repository contains supplementary data for 
-"Review Epigenome Engineering Using dCas-systems for Biomedical Applications and Biotechnology: Current Achievements, Opportunities and Challenges" by Kovales et al.
+This repository contains supplementary data for
+"3D genome engineering using CRISPR/dCas-systems" by Mamaeva et al.
 
-The best way to view it is to use the interactive web site rendered through GitHub pages from this repository at http://intbio.github.io/Kovalev_et_al_2025/
+The best way to view it is to use the interactive web site rendered through GitHub pages from this repository at http://intbio.github.io/Mamaeva_et_al_2026/

@@ -4,65 +4,52 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="js/datatables.min.css"/> 
-    
-	
+	<link rel="stylesheet" type="text/css" href="js/datatables.min.css"/>
   </head>
 <body>
- 
+
 <script src="js/datatables.min.js"></script>
 <script src="js/papaparse.min.js"></script>
 
-<H3>List of dCas-based molecular epigenetic tools.</H3>
-<a href='https://intbio.org/Kovalev_et_al_2025'>Back</a>
+<H3>dCas9-based programmable DNA-looping tools: characteristics verified from primary experimental literature.</H3>
+<a href='https://intbio.org/Mamaeva_et_al_2026'>Back</a>
 <table id="main" class="display" style="width:100%">
         <thead>
         </thead>
     </table>
 
-<style>
-.tooltip {
-  text-decoration:none;
-  position:relative;
-  padding: 1em;
-  margin: -1em;
-}
- 
-.tooltip span {
-  display:none;
-  -moz-border-radius:6px;
-  -webkit-border-radius:6px;
-  border-radius:6px;
-  color:black;
-  background:white; 
-}
- 
-.tooltip span img {
-  float:left;
-  margin:0px 8px 8px 0;
-}
- 
-.tooltip:hover span {
-  display:block;
-  position:absolute;
-  top:0;
-  left:0;
-  z-index:1000;
-  width:auto;
-  max-width:450px;
-  max-height:450px;
-  min-height:128px;
-  border:1px solid black;
-  margin-top:12px;
-  margin-left:100px;
-  overflow:hidden;
-  padding:8px;
-  opacity: 0.9;  
-}
-</style>
-
+<div style="font-size:0.85em; margin-top:1em; max-width:1100px;">
+  <p><sup>a</sup> Requires exogenous addition of synthetic ssCOA oligonucleotide adapters; the protein/sgRNA components alone are genetically encodable.</p>
+  <p><sup>b</sup> Induction in BPCL is achieved through covalent click chemistry (SPAAC/SPIEDAC), in contrast to the equilibrium chemical/optical induction of CLOuD9 and LADL. Reversal therefore requires an active UV signal rather than simple inducer removal. For dCas9-Zips and dgRNA, induction/reversal has not been demonstrated in the primary publications but could in principle be achieved by combining these architectures with switchable dCas systems.</p>
+  <p><sup>c</sup> The 167 kb value comes from Wang et al. 2021 (doi: 10.1016/j.stem.2021.04.023), who applied CLOuD9 to fuse two TADs flanking the <i>Dppa5a</i> locus in mouse MEFs. In the original Morgan et al. 2017 publication (doi: 10.1038/ncomms15993), the maximum tested distance was ~50 kb (HS2 of <i>&beta;-globin</i> LCR &harr; <i>HBB</i> promoter).</p>
+</div>
 
 <script>
+// Genes / loci / organisms to render in italics (case-sensitive).
+var ITAL = ["E. coli","lacZ","glnAp2","HBB","POU5F1","Dppa5a","Klf4","Zfp462","SOX2","LacZYA","norVW","β-globin"];
+function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+var ITAL_RE = new RegExp("(" + ITAL.map(escRe).join("|") + ")", "g");
+function italicize(data, type){
+    if (type === 'display' && data) return data.replace(ITAL_RE, "<i>$1</i>");
+    return data;
+}
+function distanceSort(data, type){
+    if (type === 'sort' || type === 'type'){
+        var m = String(data).match(/[\d.]+/);
+        return m ? parseFloat(m[0]) : 0;
+    }
+    return data;
+}
+function doiRender(data, type){
+    if (type === 'display' && data){
+        return data.split(';').map(function(x){
+            x = x.trim(); if (!x) return '';
+            return '<a href="https://doi.org/' + x + '" target="_blank">' + x + '</a>';
+        }).filter(Boolean).join('<br>');
+    }
+    return data;
+}
+
 $(function() {
     Papa.parse("ST1.csv", {
         download: true,
@@ -73,77 +60,26 @@ $(function() {
                     dataSrc: "",
                     "paging": false,
                     "searching": true,
-                    order: [], // Нет начальной сортировки
+                    order: [],
                     columns: [
-                        { title: "Name", orderable: true },
-                        { title: "Effector type", orderable: true },
-                        { title: "Action", orderable: true },
-                        { title: "Effector construct", orderable: true },
-                        { title: "dCas protein", orderable: true },
-                        { title: "Architecture", orderable: true },
-                        { title: "Organism", orderable: true },
-                        { title: "References", orderable: true },
-                        { title: "DOI link", orderable: false },
-                        { title: "Graph.Abstract link", orderable: false }
+                        { title: "System", orderable: false },
+                        { title: "Components co-delivered / co-expressed", orderable: false },
+                        { title: "Fully genetically encodable", orderable: false },
+                        { title: "Inducible", orderable: false },
+                        { title: "Reversible", orderable: false },
+                        { title: "Loci tested", orderable: false },
+                        { title: "Cell lines / organism", orderable: false },
+                        { title: "Readout", orderable: false },
+                        { title: "Distance looped", orderable: true },
+                        { title: "Quantitative performance", orderable: false },
+                        { title: "Ref. (DOI)", orderable: false }
                     ],
                     "rowReorder": false,
                     "columnDefs": [
                         { "targets": "_all", "defaultContent": "" },
-                        
-                        // Форматирование для столбцов с переносами строк (0-6)
-                        {
-                            targets: [0,1,2,3,4,5,6],
-                            render: function(data, type, row, meta) {
-                                if (type === 'display' && data) {
-                                    return data.replace(/,/g, ',<br>');
-                                }
-                                return data;
-                            }
-                        },
-                        
-                        // Специальный рендер для столбца References (7)
-                        {
-                            targets: 7,
-                            render: function(data, type, row, meta) {
-                                if (type === 'display' && data) {
-                                    var references = data.split(';');
-                                    var dois = (row[8] || '').split(';'); // DOI link (столбец 8)
-                                    var images = (row[9] || '').split(';'); // Graph.Abstract link (столбец 9)
-                                    var html = '';
-                                    
-                                    for (var i = 0; i < references.length; i++) {
-                                        if (i > 0) html += '<br>';
-                                        
-                                        var ref = references[i].trim();
-                                        var doi = dois[i] ? dois[i].trim() : '';
-                                        var img = images[i] ? images[i].trim() : '';
-                                        
-                                        // Если нет DOI - просто текст
-                                        if (!doi) {
-                                            html += ref;
-                                        }
-                                        // Если есть DOI, но нет изображения - обычная ссылка
-                                        else if (!img) {
-                                            html += `<a href="${doi}" target="_blank">${ref}</a>`;
-                                        }
-                                        // Если есть и DOI и изображение - ссылка с tooltip
-                                        else {
-                                            html += `<a class="tooltip" href="${doi}" target="_blank">${ref}
-                                                     <span><img src="${img}" style="max-height:450px;max-width:450px;"></span></a>`;
-                                        }
-                                    }
-                                    return html;
-                                }
-                                return data;
-                            }
-                        },
-                        
-                        // Скрытые столбцы (DOI link и Graph.Abstract link)
-                        {
-                            targets: [8,9],
-                            visible: false,
-                            searchable: true
-                        }
+                        { targets: [5,6,9], render: italicize },
+                        { targets: 8, render: distanceSort },
+                        { targets: 10, render: doiRender }
                     ]
                 });
             });
