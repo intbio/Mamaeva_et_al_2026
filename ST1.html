@@ -1,92 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="js/datatables.min.css"/>
-  </head>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplementary Table S1 — CRISPR/dCas tools for 3D genome engineering</title>
+<link rel="stylesheet" type="text/css" href="js/datatables.min.css"/>
+<style>
+:root{
+  --ink:#1a1a1a; --muted:#5b6470; --rule:#d8dde3; --bg:#ffffff; --soft:#f6f8fa;
+  --c-loop:#2f6f9f; --c-extr:#8a5a2b; --c-teth:#3f7a4d; --c-cond:#7a3f77; --c-acc:#8a2f3f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; padding:28px 22px 60px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  font-size:16px; line-height:1.55; color:var(--ink); background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+header{max-width:1180px;margin:0 auto 22px}
+h1{font-size:22px;line-height:1.3;margin:0 0 6px;font-weight:650;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:15px;margin:0 0 14px;max-width:78ch}
+.backlink{font-size:15px}
+.backlink a{color:var(--c-loop);text-decoration:none;border-bottom:1px solid rgba(47,111,159,.35)}
+.backlink a:hover{border-bottom-color:currentColor}
+
+/* ---- controls ---- */
+.controls{max-width:1180px;margin:0 auto 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.controls .lbl{font-size:13px;color:var(--muted);margin-right:2px}
+.tog{
+  font:inherit;font-size:13.5px;padding:6px 12px;border:1px solid var(--rule);background:var(--soft);
+  border-radius:999px;cursor:pointer;color:var(--ink);transition:background .12s,border-color .12s
+}
+.tog:hover{background:#eef1f5}
+.tog.off{opacity:.45;text-decoration:line-through}
+.tog.cat{border-left-width:4px}
+.tog[data-cat="loop"]{border-left-color:var(--c-loop)}
+.tog[data-cat="extr"]{border-left-color:var(--c-extr)}
+.tog[data-cat="teth"]{border-left-color:var(--c-teth)}
+.tog[data-cat="cond"]{border-left-color:var(--c-cond)}
+.tog[data-cat="acc"]{border-left-color:var(--c-acc)}
+
+/* ---- table ---- */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--bg)}
+table.dataTable{font-size:15px !important;border-collapse:separate !important;border-spacing:0}
+table.dataTable thead th{
+  font-size:13.5px;font-weight:650;letter-spacing:.01em;text-transform:none;
+  vertical-align:bottom;padding:12px 12px 10px !important;background:var(--soft);
+  border-bottom:2px solid var(--rule) !important;position:sticky;top:0;z-index:3
+}
+table.dataTable tbody td{
+  padding:13px 12px !important;vertical-align:top;line-height:1.5;
+  border-bottom:1px solid var(--rule) !important;min-width:200px
+}
+/* readable measure per column, sized from the longest cell each column actually holds */
+table.dataTable tbody td.xwide{min-width:400px;max-width:560px}
+table.dataTable tbody td.wide{min-width:345px;max-width:470px}
+table.dataTable tbody td.midwide{min-width:280px;max-width:385px}
+table.dataTable tbody td.mid{min-width:215px;max-width:300px}
+table.dataTable tbody td.sm{min-width:165px;max-width:205px}
+ul.b{margin:0;padding-left:1.05em;list-style:disc}
+ul.b li{margin:0 0 5px}
+ul.b li:last-child{margin-bottom:0}
+table.dataTable tbody td.sect{min-width:150px;max-width:180px;font-size:13px;color:var(--muted);white-space:nowrap}
+table.dataTable tbody td.doi{min-width:235px;max-width:272px}
+table.dataTable tbody td.doi a{white-space:nowrap}
+table.dataTable tbody tr:hover td{background:#fbfcfd}
+
+/* first column = system name, sticky + emphasised */
+table.dataTable tbody td.sysname{
+  position:sticky;left:0;z-index:2;background:var(--bg);font-weight:600;
+  min-width:226px;max-width:248px;border-right:1px solid var(--rule) !important;
+  border-left:4px solid transparent !important
+}
+table.dataTable tbody tr:hover td.sysname{background:#fbfcfd}
+thead th.sysname{position:sticky;left:0;z-index:4;background:var(--soft)}
+
+tr.cat-loop td.sysname{border-left-color:var(--c-loop) !important}
+tr.cat-extr td.sysname{border-left-color:var(--c-extr) !important}
+tr.cat-teth td.sysname{border-left-color:var(--c-teth) !important}
+tr.cat-cond td.sysname{border-left-color:var(--c-cond) !important}
+tr.cat-acc  td.sysname{border-left-color:var(--c-acc)  !important}
+
+.cattag{display:block;font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;margin-bottom:4px}
+tr.cat-loop .cattag{color:var(--c-loop)}
+tr.cat-extr .cattag{color:var(--c-extr)}
+tr.cat-teth .cattag{color:var(--c-teth)}
+tr.cat-cond .cattag{color:var(--c-cond)}
+tr.cat-acc  .cattag{color:var(--c-acc)}
+
+td a{color:var(--c-loop);text-decoration:none;border-bottom:1px solid rgba(47,111,159,.3)}
+td a:hover{border-bottom-color:currentColor}
+.yes{color:#2c6e49;font-weight:600}
+.no{color:#9a3b3b;font-weight:600}
+.na{color:var(--muted);font-style:italic}
+.hostbadge{display:inline-block;font-size:13px;font-weight:650;letter-spacing:.02em;
+  padding:2px 8px;border-radius:999px;margin-bottom:5px;white-space:nowrap}
+.hostbadge.host-euk{color:#2b5f4a;background:#e6f2ec;border:1px solid #bcd9cb}
+.hostbadge.host-bac{color:#8a4a17;background:#fdefe1;border:1px solid #f0d3b3}
+.hostbadge.host-vitro{color:#4a4a63;background:#ececf3;border:1px solid #cdcddc}
+.hostdetail{display:block;color:var(--muted);font-size:14px;line-height:1.45}
+.tog[data-host="euk"]{border-left:4px solid #2b5f4a}
+.tog[data-host="bac"]{border-left:4px solid #8a4a17}
+.tog[data-host="vitro"]{border-left:4px solid #4a4a63}
+.dataTables_filter input{font-size:15px;padding:5px 9px;border:1px solid var(--rule);border-radius:6px}
+.dataTables_filter{margin-bottom:12px}
+.dataTables_wrapper{max-width:100%}
+
+footer{max-width:1180px;margin:26px auto 0;font-size:13.5px;color:var(--muted);line-height:1.6}
+footer h2{font-size:14px;color:var(--ink);margin:0 0 8px;font-weight:650}
+footer p{margin:0 0 9px}
+footer sup{font-weight:700;color:var(--ink)}
+.legend{max-width:1180px;margin:0 auto 14px;font-size:13.5px;color:var(--muted)}
+@media print{
+  body{padding:0;font-size:9px}
+  .controls,.dataTables_filter{display:none}
+  .tablewrap{border:none;overflow:visible}
+  table.dataTable tbody td{padding:5px 6px !important;font-size:9px}
+  table.dataTable tbody td.sysname{position:static}
+  thead th{position:static !important}
+}
+</style>
+</head>
 <body>
 
 <script src="js/datatables.min.js"></script>
 <script src="js/papaparse.min.js"></script>
 
-<H3>dCas9-based programmable DNA-looping tools: characteristics verified from primary experimental literature.</H3>
-<a href='https://intbio.org/Mamaeva_et_al_2026'>Back</a>
-<table id="main" class="display" style="width:100%">
-        <thead>
-        </thead>
-    </table>
+<header>
+  <h1>Supplementary Table S1. CRISPR/dCas-based tools for engineering three-dimensional genome organization</h1>
+  <p class="sub">Characteristics verified against the primary experimental literature. The table covers CRISPR/dCas
+  platforms only: programmable chromatin looping, loop-extrusion and CTCF-boundary engineering, subnuclear tethering,
+  condensate-based chromatin remodelling and chromatin-accessibility tools.</p>
+  <p class="backlink"><a href="https://intbio.org/Mamaeva_et_al_2026">&larr; Back to supplementary index</a></p>
+</header>
 
-<div style="font-size:0.85em; margin-top:1em; max-width:1100px;">
-  <p><sup>a</sup> Requires exogenous addition of synthetic ssCOA oligonucleotide adapters; the protein/sgRNA components alone are genetically encodable.</p>
-  <p><sup>b</sup> Induction in BPCL is achieved through covalent click chemistry (SPAAC/SPIEDAC), in contrast to the equilibrium chemical/optical induction of CLOuD9 and LADL. Reversal therefore requires an active UV signal rather than simple inducer removal. For dCas9-Zips and dgRNA, induction/reversal has not been demonstrated in the primary publications but could in principle be achieved by combining these architectures with switchable dCas systems.</p>
-  <p><sup>c</sup> The 167 kb value comes from Wang et al. 2021 (doi: 10.1016/j.stem.2021.04.023), who applied CLOuD9 to fuse two TADs flanking the <i>Dppa5a</i> locus in mouse MEFs. In the original Morgan et al. 2017 publication (doi: 10.1038/ncomms15993), the maximum tested distance was ~50 kb (HS2 of <i>&beta;-globin</i> LCR &harr; <i>HBB</i> promoter).</p>
+<div class="controls">
+  <span class="lbl">Categories:</span>
+  <button class="tog cat" data-cat="loop">Chromatin looping</button>
+  <button class="tog cat" data-cat="extr">Loop extrusion / CTCF</button>
+  <button class="tog cat" data-cat="teth">Subnuclear tethering</button>
+  <button class="tog cat" data-cat="cond">Condensate-based</button>
+  <button class="tog cat" data-cat="acc">Chromatin accessibility</button>
+</div>
+<div class="controls">
+  <span class="lbl">Host system:</span>
+  <button class="tog host" data-host="euk">Eukaryotic</button>
+  <button class="tog host" data-host="bac">Bacterial</button>
+  <button class="tog host" data-host="vitro">Cell-free in vitro</button>
+</div>
+<div class="controls">
+  <span class="lbl">Column groups:</span>
+  <button class="tog grp" data-grp="mech">Mechanism</button>
+  <button class="tog grp" data-grp="deliv">Delivery</button>
+  <button class="tog grp" data-grp="ctrl">Control &amp; multiplexing</button>
+  <button class="tog grp" data-grp="evid">Experimental evidence</button>
+  <button class="tog grp" data-grp="assess">Advantages &amp; limitations</button>
 </div>
 
-<script>
-// Genes / loci / organisms to render in italics (case-sensitive).
-var ITAL = ["E. coli","lacZ","glnAp2","HBB","POU5F1","Dppa5a","Klf4","Zfp462","SOX2","LacZYA","norVW","β-globin"];
-function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
-var ITAL_RE = new RegExp("(" + ITAL.map(escRe).join("|") + ")", "g");
-function italicize(data, type){
-    if (type === 'display' && data) return data.replace(ITAL_RE, "<i>$1</i>");
-    return data;
-}
-function distanceSort(data, type){
-    if (type === 'sort' || type === 'type'){
-        var m = String(data).match(/[\d.]+/);
-        return m ? parseFloat(m[0]) : 0;
-    }
-    return data;
-}
-function doiRender(data, type){
-    if (type === 'display' && data){
-        return data.split(';').map(function(x){
-            x = x.trim(); if (!x) return '';
-            return '<a href="https://doi.org/' + x + '" target="_blank">' + x + '</a>';
-        }).filter(Boolean).join('<br>');
-    }
-    return data;
-}
+<p class="legend">Click a category or column group to hide or show it. Use the search box to filter across all fields.</p>
 
-$(function() {
-    Papa.parse("ST1.csv", {
-        download: true,
-        complete: function(d) {
-            $(document).ready(function () {
-                $('#main').DataTable({
-                    data: d.data.slice(1),
-                    dataSrc: "",
-                    "paging": false,
-                    "searching": true,
-                    order: [],
-                    columns: [
-                        { title: "System", orderable: false },
-                        { title: "Components co-delivered / co-expressed", orderable: false },
-                        { title: "Fully genetically encodable", orderable: false },
-                        { title: "Inducible", orderable: false },
-                        { title: "Reversible", orderable: false },
-                        { title: "Loci tested", orderable: false },
-                        { title: "Cell lines / organism", orderable: false },
-                        { title: "Readout", orderable: false },
-                        { title: "Distance looped", orderable: true },
-                        { title: "Quantitative performance", orderable: false },
-                        { title: "Ref. (DOI)", orderable: false }
-                    ],
-                    "rowReorder": false,
-                    "columnDefs": [
-                        { "targets": "_all", "defaultContent": "" },
-                        { targets: [5,6,9], render: italicize },
-                        { targets: 8, render: distanceSort },
-                        { targets: 10, render: doiRender }
-                    ]
-                });
-            });
-        }
+<div class="tablewrap">
+<table id="main" class="display" style="width:100%">
+  <thead></thead>
+</table>
+</div>
+
+
+
+<script>
+var ITAL = ["E. coli","S. cerevisiae","Saccharomyces cerevisiae","Clostridium thermocellum",
+  "Streptococcus pyogenes","S. thermophilus","Streptococcus pasteurianus","Campylobacter jejuni",
+  "Bacillus smithii","Lactobacillus rhamnosus","Mycoplasma canis","Parasutterella excrementihominis",
+  "Mycobacterium leprae","lacZ","LacZYA","glnAp2","norVW","HBB","POU5F1","SOX2","Dppa5a","Klf4",
+  "Zfp462","MECP2","PDGFRA","OLIG2","TAL1","LMO2","GIRK4","Vcan","HOXD3","HOXD4","HAGLR","ACAP2",
+  "PPP1R2","TFRC","IGF2","H19","SLC6A3","SCO2","ABP1","SAC7","HXK1","IDI1","Vcan","Xrcc4","Tmem167","Nlrp12","Myadm","H2Q10","Pou5f1","miR290","Hbb-bh1","HBG1","HBG2","PTEN","CXCR4","XIST","NANOG","Ldb1","in vitro","in vivo",
+  "de novo","β-globin","γ-globin"];
+function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
+ITAL.sort(function(a,b){return b.length-a.length;});
+var ITAL_RE=new RegExp("("+ITAL.map(escRe).join("|")+")","g");
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function decorate(data,type){
+  if(type!=='display'||!data) return data;
+  var s=esc(data);
+  s=s.replace(/\bNOT REPORTED\b/g,'<span class="na">not reported</span>');
+  s=s.replace(/\bNOT VERIFIABLE\b/g,'<span class="na">not verifiable</span>');
+  s=s.replace(ITAL_RE,"<i>$1</i>");
+  if(s.indexOf(' \u2022 ')>-1){                       // " • " marks a bulleted cell
+    s='<ul class="b"><li>'+s.split(' \u2022 ').join('</li><li>')+'</li></ul>';
+  }
+  return s;
+}
+function yesno(data,type){
+  if(type!=='display'||!data) return data;
+  var s=decorate(data,type);
+  if(/^Yes\b/.test(data)) s=s.replace(/^Yes/,'<span class="yes">Yes</span>');
+  else if(/^No\b/.test(data)) s=s.replace(/^No/,'<span class="no">No</span>');
+  return s;
+}
+function hostKey(d){
+  d=String(d||'');
+  if(d.indexOf('Bacterial')===0) return 'bac';
+  if(d.indexOf('Cell-free')===0) return 'vitro';
+  return 'euk';
+}
+function hostRender(data,type){
+  if(type!=='display'||!data) return data;
+  var k=hostKey(data), i=data.indexOf(' \u2014 ');
+  var head=i>-1?data.slice(0,i):data, tail=i>-1?data.slice(i+3):'';
+  var cls=k==='bac'?'host-bac':(k==='vitro'?'host-vitro':'host-euk');
+  var out='<span class="hostbadge '+cls+'">'+esc(head)+'</span>';
+  if(tail) out+='<span class="hostdetail">'+decorate(tail,'display')+'</span>';
+  return out;
+}
+function doiRender(data,type){
+  if(type!=='display'||!data) return data;
+  return data.split(';').map(function(x){
+    x=x.trim(); if(!x) return '';
+    var doi=x.replace(/^https?:\/\/(dx\.)?doi\.org\//i,'');   // accept bare DOI or full doi.org URL
+    return '<a href="https://doi.org/'+encodeURI(doi)+'" target="_blank" rel="noopener">'+esc(doi)+'</a>';
+  }).filter(Boolean).join('<br>');
+}
+var CATKEY={"Looping — constitutive dCas":"loop",
+  "Looping — inducible dCas":"loop","Loop extrusion / CTCF boundary":"extr",
+  "Subnuclear tethering":"teth","Condensate-based":"cond","Chromatin accessibility":"acc"};
+
+// column index -> {group, width class}
+var SPEC=[
+  null,                                  // 0 Category (hidden, drives colour)
+  {g:'core',  w:'sysname'},              // 1  System           (max  46 chars)
+  {g:'mech',  w:'mid'},                  // 2  Mechanism        (max 153)
+  {g:'deliv', w:'mid'},                  // 3  Components       (max  75)
+  {g:'deliv', w:'sm'},                   // 4  Encodable        (max  41)
+  {g:'ctrl',  w:'sm'},                   // 5  Inducible        (max  74)
+  {g:'ctrl',  w:'mid'},                  // 6  Reversible       (max 104)
+  {g:'evid',  w:'sm'},                   // 7  Host system      (max  18)
+  {g:'evid',  w:'sm'},                   // 8  Model system     (max  55)
+  {g:'evid',  w:'sm'},                   // 9  Target loci      (max  51)
+  {g:'ctrl',  w:'mid'},                  // 10 Multiplexing     (max  92)
+  {g:'evid',  w:'sm'},                   // 11 Genomic scale    (max  62)
+  {g:'evid',  w:'mid'},                  // 12 Readout          (max 103)
+  {g:'evid',  w:'wide'},                 // 13 Performance      (max 297)
+  {g:'assess',w:'mid'},                  // 14 Advantages       (max 180)
+  {g:'assess',w:'midwide'},              // 15 Limitations      (max 209)
+  {g:'core',  w:'doi'}                   // 16 DOI
+];
+
+$(function(){
+  Papa.parse("ST1.csv",{download:true,skipEmptyLines:true,complete:function(d){
+    var head=d.data[0], body=d.data.slice(1);
+    var cols=head.map(function(h,i){
+      var sp=SPEC[i];
+      var c={title:esc(h),orderable:false};
+      if(i===0){c.visible=false;}
+      return c;
     });
+    var table=$('#main').DataTable({
+      data:body, columns:cols, paging:false, searching:true, info:false, order:[],
+      autoWidth:false,
+      columnDefs:[
+        {targets:'_all',defaultContent:''},
+        {targets:[2,3,5,6,8,9,10,11,12,13,14,15],render:decorate},
+        {targets:[7],render:hostRender},
+        {targets:[1],render:function(data,type,row){
+            if(type!=='display') return data;
+            return '<span class="cattag">'+esc(row[0])+'</span>'+decorate(data,type);
+        }},
+        {targets:[4],render:yesno},
+        {targets:[16],render:doiRender}
+      ],
+      createdRow:function(row,data){
+        $(row).addClass('cat-'+(CATKEY[data[0]]||'loop'));
+        $('td',row).each(function(i){
+          var sp=SPEC[i+1]; // col 0 hidden, so td i maps to column i+1
+          if(sp) $(this).addClass(sp.w);
+        });
+      }
+    });
+
+    function applyFilters(){
+      var hidCat=$('.tog.cat.off').map(function(){return $(this).data('cat');}).get();
+      var hidHost=$('.tog.host.off').map(function(){return $(this).data('host');}).get();
+      $.fn.dataTable.ext.search=[function(settings,dataArr,idx){
+        var row=table.row(idx).data();
+        if(hidCat.indexOf(CATKEY[row[0]]||'loop')>-1) return false;
+        if(hidHost.indexOf(hostKey(row[7]))>-1) return false;
+        return true;
+      }];
+      table.draw();
+    }
+    $('.tog.cat, .tog.host').on('click',function(){ $(this).toggleClass('off'); applyFilters(); });
+    $('.tog.grp').on('click',function(){
+      var g=$(this).data('grp'); var off=$(this).hasClass('off');
+      $(this).toggleClass('off');
+      SPEC.forEach(function(sp,i){ if(sp&&sp.g===g) table.column(i).visible(off); });
+    });
+  }});
 });
 </script>
-
 </body>
 </html>
